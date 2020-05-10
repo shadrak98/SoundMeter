@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1047524215810",
+    "firebase_url": "https://sound-meter-5fde4.firebaseio.com",
+    "project_id": "sound-meter-5fde4",
+    "storage_bucket": "sound-meter-5fde4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047524215810:android:bb71906b32a1670786eb1b",
+        "android_client_info": {
+          "package_name": "com.example.soundmeter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047524215810-jj9i2sab5repcqckik515j70qoonfj2j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUSQ7rkYWgU0zH8yaVI9el3ycUxrxL0VE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047524215810-jj9i2sab5repcqckik515j70qoonfj2j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

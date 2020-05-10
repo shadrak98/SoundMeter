@@ -41,4 +41,11 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
 
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.google.firebase:firebase-core:17.4.1'
+
 }
+
+apply plugin: 'com.google.gms.google-services'
