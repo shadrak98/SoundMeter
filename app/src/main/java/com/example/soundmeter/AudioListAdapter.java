@@ -1,8 +1,10 @@
 package com.example.soundmeter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,6 +49,8 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
         private ImageView listImage;
         private TextView listTitle;
         private TextView listDate;
+        private ImageButton uploadAudio;
+        private ImageButton deleteAudio;
 
         public AudioViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -54,17 +58,34 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
             listImage = itemView.findViewById(R.id.list_image_view);
             listTitle = itemView.findViewById(R.id.list_title);
             listDate = itemView.findViewById(R.id.list_date);
+            uploadAudio = itemView.findViewById(R.id.uploadAudio);
+            deleteAudio = itemView.findViewById(R.id.delete);
 
             itemView.setOnClickListener(this);
+            uploadAudio.setOnClickListener(this);
+            deleteAudio.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             onItemListClick.onClickListener(allFiles[getAdapterPosition()], getAdapterPosition());
+
+            switch (view.getId()) {
+                case R.id.uploadAudio:
+                    onItemListClick.onUpload(allFiles[this.getLayoutPosition()]);
+                    break;
+
+                case R.id.delete:
+                    onItemListClick.onDelete(allFiles[this.getLayoutPosition()]);
+                    break;
+            }
+
         }
     }
 
     public interface onItemListClick {
         void onClickListener(File file, int position);
+        void onUpload(File file);
+        void onDelete(File file);
     }
 }

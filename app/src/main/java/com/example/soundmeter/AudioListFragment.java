@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ import java.io.IOException;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AudioListFragment extends Fragment implements AudioListAdapter.onItemListClick{
+public class AudioListFragment extends Fragment implements AudioListAdapter.onItemListClick {
 
     private ConstraintLayout playerSheet;
     private BottomSheetBehavior bottomSheetBehavior;
@@ -42,6 +43,8 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
     private boolean isPlaying = false;
 
     private File fileToPlay;
+    private String audioPath;
+    private File audioFile;
 
     //UI Elements
     private ImageButton playBtn;
@@ -51,6 +54,10 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
     private SeekBar seekBar;
     private Handler seekbarHandler;
     private Runnable updateSeekbar;
+
+    private ImageButton uploadAudio;
+
+    private RecordFragment recordFragment;
 
     public AudioListFragment() {
         // Required empty public constructor
@@ -75,6 +82,7 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
         playerHeader = view.findViewById(R.id.player_header_title);
         playerFilename = view.findViewById(R.id.player_filename);
         seekBar = view.findViewById(R.id.player_seekbar);
+        uploadAudio = view.findViewById(R.id.uploadAudio);
 
         String path = getActivity().getExternalFilesDir("/").getAbsolutePath();
         File directory = new File(path);
@@ -146,6 +154,25 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
         } else {
             playAudio(fileToPlay);
         }
+    }
+
+    @Override
+    public void onDelete(File file) {
+        audioPath = getActivity().getExternalFilesDir("/").getAbsolutePath();
+        stopAudio();
+        File file1 = new File(audioPath, file.getName());
+        file1.delete();
+        Log.d("onDelete","File Deleted from second");
+        audioListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onUpload(File file) {
+        audioPath = getActivity().getExternalFilesDir("/").getAbsolutePath();
+        File file1 = new File(audioPath, file.getName());
+        recordFragment.uploadFile(file1);
+        uploadAudio.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_box_black_32dp));
+        Log.d("onUpload", "uploaded from second");
     }
 
     private void pauseAudio() {

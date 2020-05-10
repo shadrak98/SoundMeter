@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/uploadfile',methods=['GET', 'POST'])
 def uploadfile():
-    print(request.data)
+    print(request.data.decode('UTF-8'))
     return "Got link"
 
 if __name__ == '__main__':

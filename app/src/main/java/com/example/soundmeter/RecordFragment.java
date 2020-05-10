@@ -160,6 +160,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mediaRecorder.setOutputFile(recordPath + "/" + recordFile);
         mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        mediaRecorder.setMaxDuration(30000);
 
         try {
             mediaRecorder.prepare();
@@ -181,12 +182,12 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
 
         recordPath = getActivity().getExternalFilesDir("/").getAbsolutePath();
 
-        recordAudioFile = new File(recordPath+"/"+recordFile);
-
-        uploadFile(recordAudioFile);
+//        recordAudioFile = new File(recordPath+"/"+recordFile);
+//
+//        uploadFile(recordAudioFile);
     }
 
-    private void uploadFile(File audioFile) {
+    public void uploadFile(File audioFile) {
 
         // Sending to Firebase
         audioFileUri = Uri.fromFile(audioFile);
