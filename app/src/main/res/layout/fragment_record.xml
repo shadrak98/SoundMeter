@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".RecordFragment"
+    android:background="@color/yellow">
+
+    <TextView
+        android:id="@+id/record_filename"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Press the mic button \n to start recording"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="200dp"
+        android:fontFamily="sans-serif"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textColor="@color/darkblue"
+        android:lineHeight="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"/>
+    
+    <Chronometer
+        android:id="@+id/record_timer"
+        app:layout_constraintTop_toBottomOf="@id/record_filename"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="80dp"
+        android:fontFamily="sans-serif"
+        android:textSize="64sp"
+        android:textColor="@color/darkblue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageButton
+        android:id="@+id/record_btn"
+        android:background="@color/yellow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_mic_black_90dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/record_timer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/record_list_btn"
+        android:background="@color/yellow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/record_btn"
+        app:layout_constraintBottom_toBottomOf="@id/record_btn"
+        app:layout_constraintStart_toEndOf="@id/record_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="16dp"
+        android:src="@drawable/ic_menu_black_64dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
