@@ -1,5 +1,6 @@
 package com.example.soundmeter;
 
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
 
     private File[] allFiles;
     private TimeAgo timeAgo;
+
+    private boolean onClick = false;
 
     private onItemListClick onItemListClick;
 
@@ -37,6 +40,11 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
     public void onBindViewHolder(@NonNull AudioViewHolder holder, int position) {
         holder.listTitle.setText(allFiles[position].getName());
         holder.listDate.setText(timeAgo.getTimeAgo(allFiles[position].lastModified()));
+        if(onClick) {
+            holder.uploadAudio.setImageResource(R.drawable.ic_check_box_black_32dp);
+            Log.d("change","background");
+        }
+
     }
 
     @Override
@@ -68,16 +76,20 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
 
         @Override
         public void onClick(View view) {
-            onItemListClick.onClickListener(allFiles[getAdapterPosition()], getAdapterPosition());
 
             switch (view.getId()) {
                 case R.id.uploadAudio:
                     onItemListClick.onUpload(allFiles[this.getLayoutPosition()]);
+                    uploadAudio.setImageResource(R.drawable.ic_check_box_black_32dp);
+                    onClick = true;
                     break;
 
                 case R.id.delete:
                     onItemListClick.onDelete(allFiles[this.getLayoutPosition()]);
                     break;
+
+                default:
+                    onItemListClick.onClickListener(allFiles[getAdapterPosition()], getAdapterPosition());
             }
 
         }

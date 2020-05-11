@@ -168,11 +168,12 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
 
     @Override
     public void onUpload(File file) {
+        recordFragment = new RecordFragment();
         audioPath = getActivity().getExternalFilesDir("/").getAbsolutePath();
         File file1 = new File(audioPath, file.getName());
-        recordFragment.uploadFile(file1);
-        uploadAudio.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_box_black_32dp));
         Log.d("onUpload", "uploaded from second");
+//        uploadAudio.setImageResource(R.drawable.ic_check_box_black_32dp);
+        recordFragment.uploadFile(file1);
     }
 
     private void pauseAudio() {

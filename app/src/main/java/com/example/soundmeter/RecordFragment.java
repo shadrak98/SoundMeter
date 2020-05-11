@@ -25,6 +25,7 @@ import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -192,7 +193,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         // Sending to Firebase
         audioFileUri = Uri.fromFile(audioFile);
 
-        storageReference = FirebaseStorage.getInstance().getReference(recordFile);
+        storageReference = FirebaseStorage.getInstance().getReference().child("random");
         storageReference.putFile(audioFileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -201,6 +202,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
                     public void onSuccess(Uri uri) {
                         audioFileUri = uri;
                         Log.d("uripath", String.valueOf(audioFileUri));
+                        Toast.makeText(getContext(), "uploaded", Toast.LENGTH_SHORT).show();
                         connectserver(String.valueOf(audioFileUri));
                     }
                 });
