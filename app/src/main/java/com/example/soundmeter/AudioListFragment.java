@@ -172,7 +172,6 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
         audioPath = getActivity().getExternalFilesDir("/").getAbsolutePath();
         File file1 = new File(audioPath, file.getName());
         Log.d("onUpload", "uploaded from second");
-//        uploadAudio.setImageResource(R.drawable.ic_check_box_black_32dp);
         recordFragment.uploadFile(file1);
     }
 
