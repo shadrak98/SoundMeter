@@ -2,8 +2,10 @@ package com.example.soundmeter;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
@@ -182,10 +184,6 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         mediaRecorder = null;
 
         recordPath = getActivity().getExternalFilesDir("/").getAbsolutePath();
-
-//        recordAudioFile = new File(recordPath+"/"+recordFile);
-//
-//        uploadFile(recordAudioFile);
     }
 
     public void uploadFile(File audioFile) {
@@ -202,7 +200,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
                     public void onSuccess(Uri uri) {
                         audioFileUri = uri;
                         Log.d("uripath", String.valueOf(audioFileUri));
-                        Toast.makeText(getContext(), "uploaded", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(this), "uploaded", Toast.LENGTH_SHORT).show();
                         connectserver(String.valueOf(audioFileUri));
                     }
                 });
