@@ -19,5 +19,16 @@
         android:id="@+id/audioListFragment2"
         android:name="com.example.soundmeter.AudioListFragment"
         android:label="fragment_audio_list"
-        tools:layout="@layout/fragment_audio_list" />
+        tools:layout="@layout/fragment_audio_list" >
+        <action
+            android:id="@+id/action_audioListFragment2_to_result"
+            app:destination="@id/result"
+            app:exitAnim="@anim/fade_out"
+            app:enterAnim="@anim/slide_in"/>
+    </fragment>
+    <fragment
+        android:id="@+id/result"
+        android:name="com.example.soundmeter.result"
+        android:label="fragment_result"
+        tools:layout="@layout/fragment_result" />
 </navigation>

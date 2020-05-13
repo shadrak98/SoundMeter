@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,6 +59,8 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
     private ImageButton uploadAudio;
 
     private RecordFragment recordFragment;
+
+    private NavController navController;
 
     public AudioListFragment() {
         // Required empty public constructor
@@ -172,6 +175,7 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
         audioPath = getActivity().getExternalFilesDir("/").getAbsolutePath();
         File file1 = new File(audioPath, file.getName());
         Log.d("onUpload", "uploaded from second");
+//        navController.navigate(R.id.action_audioListFragment2_to_result);
         recordFragment.uploadFile(file1);
     }
 

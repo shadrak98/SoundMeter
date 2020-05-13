@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
@@ -20,6 +21,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
     private TimeAgo timeAgo;
 
     private onItemListClick onItemListClick;
+    private NavController navController;
 
     public AudioListAdapter(File[] allFiles, onItemListClick onItemListClick) {
         this.allFiles = allFiles;
@@ -74,6 +76,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
                 case R.id.uploadAudio:
                     onItemListClick.onUpload(allFiles[this.getLayoutPosition()]);
                     uploadAudio.setImageResource(R.drawable.ic_check_box_black_32dp);
+//                    navController.navigate(R.id.action_audioListFragment2_to_result);
                     break;
 
                 case R.id.delete:

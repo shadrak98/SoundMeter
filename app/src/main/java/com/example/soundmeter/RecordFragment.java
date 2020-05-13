@@ -30,6 +30,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -70,16 +75,20 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
     private Chronometer timer;
 
     private TextView fileName;
+    public Double value;
 
     private String ipaddress = "192.168.43.142";
     private String port = "5000";
     private String recordPath;
 
-    private File recordAudioFile;
+    private int last_id, new_id;
 
     private Uri audioFileUri;
 
+    // Firebase
     StorageReference storageReference;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
     public RecordFragment() {
         // Required empty public constructor
@@ -188,10 +197,25 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
 
     public void uploadFile(File audioFile) {
 
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                last_id = Integer.parseInt(String.valueOf(dataSnapshot.child("Last-Id")));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+//        last_id = Integer.parseInt(String.valueOf(databaseReference.child("Last-Id")));
+        new_id = last_id + 1;
+
         // Sending to Firebase
         audioFileUri = Uri.fromFile(audioFile);
 
-        storageReference = FirebaseStorage.getInstance().getReference().child("random");
+        storageReference = FirebaseStorage.getInstance().getReference().child(String.valueOf(new_id));
         storageReference.putFile(audioFileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -244,20 +268,14 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Call call, final Response response) throws IOException {
 
                 Log.d("Flask Server",response.body().string());
+                value = Double.valueOf(response.body().string());
+                SimpleDateFormat format = new SimpleDateFormat("hh_mm", Locale.ENGLISH);
+                Date now = new Date();
+                databaseReference = FirebaseDatabase.getInstance().getReference();
+                databaseReference.child("Data").child(String.valueOf(new_id)).setValue(new record(String.valueOf(now),value, recordFile));
+                databaseReference.child("Last-Id").setValue(new_id);
 
-                // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-////                        TextView responseText = findViewById(R.id.responseText);
-//                        try {
-////                            responseText.setText(response.body().string());
-//                            Log.d("Flask Server",response.body().string());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
+                Log.d("Response", String.valueOf(new_id)+" "+now+" "+" "+value+" "+recordFile);
             }
         });
     }
