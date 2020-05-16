@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ public class result extends Fragment {
     private String fileName;
     private Double dBvalue;
 
+    private RecordFragment recordFragment;
+
     public result() {
         // Required empty public constructor
     }
@@ -49,14 +52,19 @@ public class result extends Fragment {
         filename = view.findViewById(R.id.filename);
         dBValue = view.findViewById(R.id.dBvalue);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        recordID = Integer.parseInt(String.valueOf(databaseReference.child("Last-Id")));
+        recordFragment = new RecordFragment();
+        dBvalue = recordFragment.value;
 
-        fileName = String.valueOf(databaseReference.child("Data").child(String.valueOf(recordID)).child("fileName"));
-        dBvalue = Double.valueOf(String.valueOf(databaseReference.child("Data").child(String.valueOf(recordID)).child("dBvalue")));
+//        databaseReference = FirebaseDatabase.getInstance().getReference();
+//        recordID = Integer.parseInt(String.valueOf(databaseReference.child("Last-Id")));
+//
+//        fileName = String.valueOf(databaseReference.child("Data").child(String.valueOf(recordID)).child("fileName"));
+//        dBvalue = Double.valueOf(String.valueOf(databaseReference.child("Data").child(String.valueOf(recordID)).child("dBvalue")));
+//
+        filename.setText("Shadrak");
+        dBValue.setText(String.valueOf(53));
 
-        filename.setText(fileName);
-        dBValue.setText(String.valueOf(dBvalue));
+        Log.d("result", String.valueOf(dBvalue));
 
     }
 }

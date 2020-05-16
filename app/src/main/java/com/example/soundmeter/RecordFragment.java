@@ -197,25 +197,25 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
 
     public void uploadFile(File audioFile) {
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                last_id = Integer.parseInt(String.valueOf(dataSnapshot.child("Last-Id")));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//        databaseReference = FirebaseDatabase.getInstance().getReference();
+//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                last_id = Integer.parseInt(String.valueOf(dataSnapshot.child("Last-Id")));
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 //        last_id = Integer.parseInt(String.valueOf(databaseReference.child("Last-Id")));
-        new_id = last_id + 1;
+//        new_id = last_id + 1;
 
         // Sending to Firebase
         audioFileUri = Uri.fromFile(audioFile);
 
-        storageReference = FirebaseStorage.getInstance().getReference().child(String.valueOf(new_id));
+        storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.putFile(audioFileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -269,13 +269,13 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
 
                 Log.d("Flask Server",response.body().string());
                 value = Double.valueOf(response.body().string());
-                SimpleDateFormat format = new SimpleDateFormat("hh_mm", Locale.ENGLISH);
-                Date now = new Date();
-                databaseReference = FirebaseDatabase.getInstance().getReference();
-                databaseReference.child("Data").child(String.valueOf(new_id)).setValue(new record(String.valueOf(now),value, recordFile));
-                databaseReference.child("Last-Id").setValue(new_id);
+//                SimpleDateFormat format = new SimpleDateFormat("hh_mm", Locale.ENGLISH);
+//                Date now = new Date();
+//                databaseReference = FirebaseDatabase.getInstance().getReference();
+//                databaseReference.child("Data").child(String.valueOf(new_id)).setValue(new record(String.valueOf(now),value, recordFile));
+//                databaseReference.child("Last-Id").setValue(new_id);
 
-                Log.d("Response", String.valueOf(new_id)+" "+now+" "+" "+value+" "+recordFile);
+                Log.d("Response", String.valueOf(value));
             }
         });
     }
