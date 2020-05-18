@@ -18,7 +18,7 @@ def uploadfile():
     '''
     # TODO: Store data on Firebase
     '''
-    return db_value
+    return str(db_value)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

@@ -70,7 +70,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
     private int PERMISSION_CODE = 21;
 
     private MediaRecorder mediaRecorder;
-    private String recordFile;
+    public String recordFile;
 
     private Chronometer timer;
 
@@ -195,90 +195,76 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         recordPath = getActivity().getExternalFilesDir("/").getAbsolutePath();
     }
 
-    public void uploadFile(File audioFile) {
-
-//        databaseReference = FirebaseDatabase.getInstance().getReference();
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                last_id = Integer.parseInt(String.valueOf(dataSnapshot.child("Last-Id")));
-//            }
+//    public void uploadFile(File audioFile) {
 //
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//        // Sending to Firebase
+//        audioFileUri = Uri.fromFile(audioFile);
 //
-//            }
-//        });
-//        last_id = Integer.parseInt(String.valueOf(databaseReference.child("Last-Id")));
-//        new_id = last_id + 1;
-
-        // Sending to Firebase
-        audioFileUri = Uri.fromFile(audioFile);
-
-        storageReference = FirebaseStorage.getInstance().getReference();
-        storageReference.putFile(audioFileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        audioFileUri = uri;
-                        Log.d("uripath", String.valueOf(audioFileUri));
-//                        Toast.makeText(getActivity(this), "uploaded", Toast.LENGTH_SHORT).show();
-                        connectserver(String.valueOf(audioFileUri));
-                    }
-                });
-            }
-        });
-    }
-
-    private void connectserver(String URI) {
-        // Sending to Flask Server
-        String postURL = "http://"+ipaddress+":"+port+"/uploadfile";
-
-        RequestBody requestBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("_audio", recordFile,
-                        RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), URI))
-                .build();
-
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url(postURL)
-                .post(requestBody)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                // Cancel the post on failure.
-                call.cancel();
-                Log.d("Flask Server","Failed to connect to server");
-                // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
-//                runOnUiThread(new Runnable() {
+//        storageReference = FirebaseStorage.getInstance().getReference("data");
+//        storageReference.putFile(audioFileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 //                    @Override
-//                    public void run() {
-//                        Log.d("Flask Server","Failed to connect to server");
+//                    public void onSuccess(Uri uri) {
+//                        audioFileUri = uri;
+//                        Log.d("uripath", String.valueOf(audioFileUri));
+////                        Toast.makeText(getActivity(this), "uploaded", Toast.LENGTH_SHORT).show();
+//                        connectserver(String.valueOf(audioFileUri));
 //                    }
 //                });
-            }
-
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-
-                Log.d("Flask Server",response.body().string());
-                value = Double.valueOf(response.body().string());
-//                SimpleDateFormat format = new SimpleDateFormat("hh_mm", Locale.ENGLISH);
-//                Date now = new Date();
-//                databaseReference = FirebaseDatabase.getInstance().getReference();
-//                databaseReference.child("Data").child(String.valueOf(new_id)).setValue(new record(String.valueOf(now),value, recordFile));
-//                databaseReference.child("Last-Id").setValue(new_id);
-
-                Log.d("Response", String.valueOf(value));
-            }
-        });
-    }
+//            }
+//        });
+//    }
+//
+//    private void connectserver(String URI) {
+//        // Sending to Flask Server
+//        String postURL = "http://"+ipaddress+":"+port+"/uploadfile";
+//
+//        RequestBody requestBody = new MultipartBody.Builder()
+//                .setType(MultipartBody.FORM)
+//                .addFormDataPart("_audio", recordFile,
+//                        RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), URI))
+//                .build();
+//
+//        OkHttpClient client = new OkHttpClient();
+//
+//        Request request = new Request.Builder()
+//                .url(postURL)
+//                .post(requestBody)
+//                .build();
+//
+//        client.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                // Cancel the post on failure.
+//                call.cancel();
+//                Log.d("Flask Server","Failed to connect to server");
+//                // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
+////                runOnUiThread(new Runnable() {
+////                    @Override
+////                    public void run() {
+////                        Log.d("Flask Server","Failed to connect to server");
+////                    }
+////                });
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, final Response response) throws IOException {
+//
+//                String lol = response.body().string();
+//                value = Double.valueOf(lol);
+//                Log.d("Flask Server",lol);
+////                SimpleDateFormat format = new SimpleDateFormat("hh_mm", Locale.ENGLISH);
+////                Date now = new Date();
+////                databaseReference = FirebaseDatabase.getInstance().getReference();
+////                databaseReference.child("Data").child(String.valueOf(new_id)).setValue(new record(String.valueOf(now),value, recordFile));
+////                databaseReference.child("Last-Id").setValue(new_id);
+//
+//                Log.d("Response", String.valueOf(value));
+//            }
+//        });
+//    }
 
     private boolean checkPermissions() {
         if(ActivityCompat.checkSelfPermission(getContext(), recordPermissions) == PackageManager.PERMISSION_GRANTED) {

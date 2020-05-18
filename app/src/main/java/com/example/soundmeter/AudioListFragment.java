@@ -61,6 +61,7 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
     private ImageButton uploadAudio;
 
     private RecordFragment recordFragment;
+    private result result;
 
     private NavController navController;
 
@@ -174,6 +175,7 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
     @Override
     public void onUpload(File file) {
         recordFragment = new RecordFragment();
+        result = new result();
         audioPath = getActivity().getExternalFilesDir("/").getAbsolutePath();
         File file1 = new File(audioPath, file.getName());
         Log.d("onUpload", "uploaded from second");
@@ -181,7 +183,8 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
         result myresult = new result();
         FragmentTransaction fm = getFragmentManager().beginTransaction().replace(R.id.fragment_container,myresult);
         fm.commit();
-        recordFragment.uploadFile(file1);
+//        recordFragment.uploadFile(file1);
+        result.uploadFile(file1);
     }
 
     private void pauseAudio() {
