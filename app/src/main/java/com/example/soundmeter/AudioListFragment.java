@@ -174,17 +174,20 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
 
     @Override
     public void onUpload(File file) {
-        recordFragment = new RecordFragment();
+
         result = new result();
         audioPath = getActivity().getExternalFilesDir("/").getAbsolutePath();
         File file1 = new File(audioPath, file.getName());
         Log.d("onUpload", "uploaded from second");
-//        navController.navigate(R.id.action_audioListFragment2_to_result);
+
         result myresult = new result();
         FragmentTransaction fm = getFragmentManager().beginTransaction().replace(R.id.fragment_container,myresult);
         fm.commit();
-//        recordFragment.uploadFile(file1);
-        result.uploadFile(file1);
+
+        AsyncTaskClass asyncTaskClass = new AsyncTaskClass(getContext());
+        asyncTaskClass.execute(file1);
+
+//        result.uploadFile(file1);
     }
 
     private void pauseAudio() {

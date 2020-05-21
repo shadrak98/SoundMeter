@@ -1,6 +1,7 @@
 package com.example.soundmeter;
 
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +79,8 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
                 case R.id.uploadAudio:
                     onItemListClick.onUpload(allFiles[this.getLayoutPosition()]);
                     uploadAudio.setImageResource(R.drawable.ic_check_box_black_32dp);
-//                    navController.navigate(R.id.action_audioListFragment2_to_result);
+//                    AsyncTaskClass asyncTaskClass = new AsyncTaskClass();
+//                    asyncTaskClass.execute(allFiles[this.getLayoutPosition()]);
                     break;
 
                 case R.id.delete:
