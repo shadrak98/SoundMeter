@@ -109,6 +109,7 @@ public class result extends Fragment {
         pdCanceller.postDelayed(progressRunnable, 30000);
 
         Log.d("result1", String.valueOf(dBvalue));
+        dBValue.setText("85");
 
     }
 
