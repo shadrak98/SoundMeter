@@ -89,6 +89,24 @@ public class result extends Fragment {
         recordFile = recordFragment.recordFile;
 
         filename.setText("Shadrak");
+        dBValue.setText("58");
+
+        progress = new ProgressDialog(getContext());
+        progress.setTitle("Loading");
+        progress.setMessage("Wait till loading...");
+        progress.setCancelable(false);
+        progress.show();
+
+        Runnable progressRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                progress.cancel();
+            }
+        };
+
+        Handler pdCanceller = new Handler();
+        pdCanceller.postDelayed(progressRunnable, 30000);
 
         Log.d("result1", String.valueOf(dBvalue));
 
@@ -98,4 +116,64 @@ public class result extends Fragment {
         Log.d("resultclass", String.valueOf(value));
         dBValue.setText(String.valueOf(value));
     }
+
+    public void uploadFile(File audioFile) {
+
+        // Sending to Firebase
+        audioFileUri = Uri.fromFile(audioFile);
+
+        storageReference = FirebaseStorage.getInstance().getReference("data");
+        storageReference.putFile(audioFileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        audioFileUri = uri;
+                        Log.d("uripath", String.valueOf(audioFileUri));
+//                        Toast.makeText(getActivity(this), "uploaded", Toast.LENGTH_SHORT).show();
+                        connectserver(String.valueOf(audioFileUri));
+                    }
+                });
+            }
+        });
+    }
+
+    private void connectserver(String URI) {
+        // Sending to Flask Server
+        String postURL = "http://"+ipaddress+":"+port+"/uploadfile";
+
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("_audio", recordFile,
+                        RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), URI))
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(postURL)
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                // Cancel the post on failure.
+                call.cancel();
+                Log.d("Flask Server","Failed to connect to server");
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+
+                String lol = response.body().string();
+                value = Double.valueOf(lol);
+                Log.d("Flask Server",lol);
+
+                Log.d("Response", String.valueOf(value));
+            }
+        });
+    }
+
 }

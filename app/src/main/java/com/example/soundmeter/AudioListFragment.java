@@ -184,10 +184,10 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
         FragmentTransaction fm = getFragmentManager().beginTransaction().replace(R.id.fragment_container,myresult);
         fm.commit();
 
-        AsyncTaskClass asyncTaskClass = new AsyncTaskClass(getContext());
-        asyncTaskClass.execute(file1);
+//        AsyncTaskClass asyncTaskClass = new AsyncTaskClass(getContext());
+//        asyncTaskClass.execute(file1);
 
-//        result.uploadFile(file1);
+        result.uploadFile(file1);
     }
 
     private void pauseAudio() {
