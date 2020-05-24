@@ -67,7 +67,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
 
     private boolean isRecording = false;
     private String recordPermissions = Manifest.permission.RECORD_AUDIO;
-    private int PERMISSION_CODE = 21;
+    private int PERMISSION_CODE = 21, i = 1;
 
     private MediaRecorder mediaRecorder;
     public String recordFile;
@@ -163,7 +163,8 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         recordPath = getActivity().getExternalFilesDir("/").getAbsolutePath();
         SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss", Locale.ENGLISH);
         Date now = new Date();
-        recordFile = "Recording_"+ format.format(now) +".3gp";
+//        recordFile = "Recording_"+ format.format(now) +".3gpp";
+        recordFile = String.valueOf(i)+".3gpp";
 
         fileName.setText("Recording, FileName : " + recordFile);
 
@@ -181,6 +182,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         }
 
         mediaRecorder.start();
+        i++;
     }
 
     private void stopRecording() {

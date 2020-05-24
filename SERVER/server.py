@@ -32,22 +32,22 @@ def index():
 
 @app.route('/uploadfile',methods=['GET', 'POST'])
 def uploadfile():
-    url = request.form["_audio"]
+    url = request['_audio']
     print(url)
     # Download and process audio
-    os.system("wget -O {}".format(url))
-    os.system("ffmpeg -i 1.3gpp -ac 2 audio3.wav")
-    db_value = convert_to_db()
+    #os.system("wget -O {}".format(url))
+    #os.system("ffmpeg -i 1.3gpp -ac 2 audio3.wav")
+    db_value = 35
 
     # Store data on Firebase
-    last_id = firebase.get('/Last-Id/', None)
-    new_id = last_id + 1
-    firebase.put('/', 'Last-Id', new_id)
+    #last_id = firebase.get('/Last-Id/', None)
+    #new_id = last_id + 1
+    #firebase.put('/', 'Last-Id', new_id)
 
-    current_time = datetime.datetime.now()
-    hour, min = str(current_time.hour), str(current_time.minute)
-    json = {"time-stamp": hour+":"+min, "value":db_value}
-    firebase.put('/Data/', newid, json)
+    #current_time = datetime.datetime.now()
+    #hour, min = str(current_time.hour), str(current_time.minute)
+    #json = {"time-stamp": hour+":"+min, "value":db_value}
+    #firebase.put('/Data/', newid, json)
     
     return str(db_value)
 

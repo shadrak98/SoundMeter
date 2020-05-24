@@ -119,7 +119,7 @@ public class AsyncTaskClass extends AsyncTask<File, Void, Double> {
         result = new result();
 //        result.dBValue.setText(String.valueOf(value));
         Log.d("Asynctask", String.valueOf(value));
-        result.onResponse(value);
+//        result.onResponse(value);
     }
 }
 

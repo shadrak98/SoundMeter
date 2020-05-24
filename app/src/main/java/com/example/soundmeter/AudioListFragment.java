@@ -9,7 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
+//import androidx.navigation.NavController;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,7 +63,7 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
     private RecordFragment recordFragment;
     private result result;
 
-    private NavController navController;
+//    private NavController navController;
 
     public AudioListFragment() {
         // Required empty public constructor
@@ -179,15 +179,18 @@ public class AudioListFragment extends Fragment implements AudioListAdapter.onIt
         audioPath = getActivity().getExternalFilesDir("/").getAbsolutePath();
         File file1 = new File(audioPath, file.getName());
         Log.d("onUpload", "uploaded from second");
+        String filename = file.getName();
 
-        result myresult = new result();
-        FragmentTransaction fm = getFragmentManager().beginTransaction().replace(R.id.fragment_container,myresult);
+//        result myresult = new result();
+        FragmentTransaction fm = getFragmentManager().beginTransaction().replace(R.id.fragment_container,result);
         fm.commit();
 
 //        AsyncTaskClass asyncTaskClass = new AsyncTaskClass(getContext());
 //        asyncTaskClass.execute(file1);
 
-        result.uploadFile(file1);
+        result.uploadFile(filename);
+//        result.connectserver(file1, audioPath);
+//        result.connectserver(filename, file1);
     }
 
     private void pauseAudio() {
