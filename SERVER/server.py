@@ -12,7 +12,7 @@ firebase = firebase.FirebaseApplication('https://sound-meter-5fde4.firebaseio.co
 
 def convert_to_db():
     CHUNK = 1024
-    wf = wave.open("./static/uploads/output.wav", 'rb')
+    wf = wave.open("/home/shadrak/output.wav", 'rb')
     data = wf.readframes(CHUNK)
 
     x = []
@@ -36,7 +36,7 @@ def uploadfile():
     print(url)
     # Download and process audio
     os.system("wget -O {}".format(url))
-    os.system("ffmpeg -i 1.3gp -ac 2 audio3.wav")
+    os.system("ffmpeg -i 1.3gpp -ac 2 audio3.wav")
     db_value = convert_to_db()
 
     # Store data on Firebase
