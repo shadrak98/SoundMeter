@@ -124,73 +124,8 @@ public class result extends Fragment {
 //        progress.dismiss();
     }
 
-//    public void uploadFile(File audioFile) {
-//
-//        // Sending to Firebase
-//        audioFileUri = Uri.fromFile(audioFile);
-//        int i = 1;
-//
-//        storageReference = FirebaseStorage.getInstance().getReference().child(String.valueOf(i)+".3gpp");
-//        storageReference.putFile(audioFileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                    @Override
-//                    public void onSuccess(Uri uri) {
-//                        audioFileUri = uri;
-//                        Log.d("uripath", String.valueOf(audioFileUri));
-////                        Toast.makeText(getActivity(this), "uploaded", Toast.LENGTH_SHORT).show();
-////                        connectserver(String.valueOf(audioFileUri));
-//                    }
-//                });
-//            }
-//        });
-//        i++;
-//    }
 
-//    public void connectserver(String fileName,File file) {
-//        // Sending to Flask Server
-////        progress.dismiss();
-//        audioFileUri = Uri.fromFile(file);
-//        String postURL = "http://"+ipaddress+":"+port+"/uploadfile";
-//
-//        RequestBody requestBody = new MultipartBody.Builder()
-//                .setType(MultipartBody.FORM)
-//                .addFormDataPart("_audio", fileName,
-//                        RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), String.valueOf(audioFileUri)))
-//                .build();
-//
-//
-//        OkHttpClient client = new OkHttpClient();
-//
-//        Request request = new Request.Builder()
-//                .url(postURL)
-//                .post(requestBody)
-//                .build();
-//
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                // Cancel the post on failure.
-//                call.cancel();
-//                Log.d("Flask Server","Failed to connect to server");
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, final Response response) throws IOException {
-//                Log.d("call", call.toString());
-//                String lol = response.body().string();
-////                value = Double.valueOf(lol);
-//                Log.d("Flask Server",lol);
-//
-////                Log.d("Response", String.valueOf(value));
-////                dBValue.setText(String.valueOf(value));
-//            }
-//        });
-////        dBValue.setText(String.valueOf(value));
-//    }
-
-    public void uploadFile(String fileName) {
+    public void uploadFile(String fileName) {  //method calling from AudioListFragment
         JSONObject jsonObject = new JSONObject();
         try{
             jsonObject.put("_audio", fileName);
@@ -200,13 +135,13 @@ public class result extends Fragment {
 
         ConnectionManager connectionManager = new ConnectionManager();
 
-        if(progress != null) {
+        if(progress != null) { //progress is null
             progress.dismiss();
             dBValue.setText("22");
         }
 
         FragmentActivity activity = getActivity();
-        if(activity != null && isAdded()) {
+        if(activity != null && isAdded()) { // activity is null, not attached to fragment
 
             RequestQueue requestQueue = Volley.newRequestQueue(activity);
             String URL = connectionManager.ipaddress + "/uploadfile";
@@ -224,7 +159,7 @@ public class result extends Fragment {
             });
         } else {
             Log.d("Else","activity null");
-//            dBValue.setText("22");
+//            dBValue.setText("22");   // dBValue is null (Textview)
         }
 
     }
